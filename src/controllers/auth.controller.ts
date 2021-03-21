@@ -7,7 +7,7 @@ import { controller, httpPost, request } from "inversify-express-utils";
 @controller("/auth")
 export class AuthController {
   public constructor(
-    @inject(TYPES.UserService) private readonly authService: IAuthService
+    @inject(TYPES.AuthService) private readonly authService: IAuthService
   ) {}
 
   @httpPost("/register")
