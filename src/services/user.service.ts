@@ -19,7 +19,7 @@ export class UserService implements IUserService {
     let userId;
     try {
       const payload = <{ userId: string; iat: string; exp: string }>(
-        jwt.verify(token, "secret")
+        jwt.verify(token, process.env.JWT_SECRET as string)
       );
       userId = payload.userId;
     } catch (err) {

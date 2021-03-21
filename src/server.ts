@@ -6,8 +6,10 @@ import { Container } from "inversify";
 import { InversifyExpressServer } from "inversify-express-utils";
 import "reflect-metadata";
 import { CustomError } from "@/fragments/CustomError";
+import dotenv from "dotenv";
 
 (async () => {
+  dotenv.config();
   const container = new Container();
   await container.loadAsync(bindings);
 

@@ -17,9 +17,13 @@ export class AuthService implements IAuthService {
   public async register(userInput: UserInput): Promise<string> {
     const user = this.userFactory.buildUser(userInput);
     const savedUser = await this.userRepository.create(user);
-    const token = jwt.sign({ userId: savedUser.id }, "secret", {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { userId: savedUser.id },
+      process.env.JWT_SECRET as string,
+      {
+        expiresIn: "1h",
+      }
+    );
     return token;
   }
 
@@ -32,7 +36,11 @@ export class AuthService implements IAuthService {
     if (!user.passwordIsValid(password)) {
       throw new CustomError("invalid password", 401);
     }
-    const token = jwt.sign({ userId: user.id }, "secret", { expiresIn: "1h" });
+    const token = jwt.sign(
+      { userId: user.id },
+      process.env.JWT_SECRET as string,
+      { expiresIn: "1h" }
+    );
     return token;
   }
 }
