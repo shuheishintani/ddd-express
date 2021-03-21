@@ -24,7 +24,11 @@ import dotenv from "dotenv";
         extended: true,
       })
     );
-    app.use(cors());
+    app.use(
+      cors({
+        origin: "https://ddd-express.herokuapp.com/",
+      })
+    );
     app.use(helmet());
   });
 
