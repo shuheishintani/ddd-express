@@ -1,5 +1,3 @@
-const rootDir = process.env.NODE_ENV === "development" ? "src" : "dist";
-
 module.exports = {
   type: "postgres",
   host: process.env.DB_HOST || "db",
@@ -18,7 +16,7 @@ module.exports = {
         },
   synchronize: true,
   logging: false,
-  entities: [rootDir + "/entities/**/*.{js,ts}"],
-  migrations: [rootDir + "/migrations/*.{js,ts}"],
-  subscribers: [rootDir + "/subscribers/**/*.{js,ts}"],
+  entities: ["src/entities/**/*.{js,ts}"],
+  migrations: ["src/migrations/*.{js,ts}"],
+  subscribers: ["src/subscribers/**/*.{js,ts}"],
 };
