@@ -60,7 +60,7 @@ __decorate([
 ], AuthController.prototype, "login", null);
 AuthController = __decorate([
     inversify_express_utils_1.controller("/auth"),
-    __param(0, inversify_1.inject(types_1.TYPES.UserService)),
+    __param(0, inversify_1.inject(types_1.TYPES.AuthService)),
     __metadata("design:paramtypes", [Object])
 ], AuthController);
 exports.AuthController = AuthController;

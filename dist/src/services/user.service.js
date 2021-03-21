@@ -55,7 +55,7 @@ let UserService = class UserService {
         return __awaiter(this, void 0, void 0, function* () {
             let userId;
             try {
-                const payload = (jwt.verify(token, "secret"));
+                const payload = (jwt.verify(token, process.env.JWT_SECRET));
                 userId = payload.userId;
             }
             catch (err) {

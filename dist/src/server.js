@@ -19,7 +19,9 @@ const helmet_1 = __importDefault(require("helmet"));
 const inversify_1 = require("inversify");
 const inversify_express_utils_1 = require("inversify-express-utils");
 require("reflect-metadata");
+const dotenv_1 = __importDefault(require("dotenv"));
 (() => __awaiter(void 0, void 0, void 0, function* () {
+    dotenv_1.default.config();
     const container = new inversify_1.Container();
     yield container.loadAsync(bindings_1.bindings);
     const server = new inversify_express_utils_1.InversifyExpressServer(container, null, {
