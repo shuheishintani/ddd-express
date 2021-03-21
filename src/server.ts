@@ -26,7 +26,7 @@ import dotenv from "dotenv";
     );
     app.use(
       cors({
-        origin: "https://ddd-express.herokuapp.com/",
+        origin: "https://ddd-express-client.vercel.app/",
       })
     );
     app.use(helmet());
