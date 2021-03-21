@@ -24,11 +24,7 @@ import dotenv from "dotenv";
         extended: true,
       })
     );
-    app.use(
-      cors({
-        origin: "https://ddd-express-client.vercel.app/",
-      })
-    );
+    app.use(cors());
     app.use(helmet());
   });
 
