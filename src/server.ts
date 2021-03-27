@@ -26,6 +26,8 @@ import "reflect-metadata";
     );
     app.use((_req: express.Request, res: express.Response) => {
       res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Access-Control-Allow-Methods", "*");
+      res.setHeader("Access-Control-Allow-Headers", "*");
     });
     app.use(
       cors({
