@@ -13,24 +13,39 @@ import "reflect-metadata";
   const container = new Container();
   await container.loadAsync(bindings);
 
-  const server = new InversifyExpressServer(container, null, {
-    rootPath: "/api",
-  });
+  const app = express();
+  app.use(cors({ origin: true }));
+  app.use(express.json());
+  app.use(
+    express.urlencoded({
+      extended: true,
+    })
+  );
+  app.use(helmet());
+
+  const server = new InversifyExpressServer(
+    container,
+    null,
+    {
+      rootPath: "/api",
+    },
+    app
+  );
 
   server.setConfig((app) => {
-    app.use(cors());
-    app.use((_req: express.Request, res: express.Response) => {
-      res.setHeader("Access-Control-Allow-Origin", "*");
-      res.setHeader("Access-Control-Allow-Methods", "*");
-      res.setHeader("Access-Control-Allow-Headers", "*");
-    });
-    app.use(express.json());
-    app.use(
-      express.urlencoded({
-        extended: true,
-      })
-    );
-    app.use(helmet());
+    // app.use(cors());
+    // app.use((_req: express.Request, res: express.Response) => {
+    //   res.setHeader("Access-Control-Allow-Origin", "*");
+    //   res.setHeader("Access-Control-Allow-Methods", "*");
+    //   res.setHeader("Access-Control-Allow-Headers", "*");
+    // });
+    // app.use(express.json());
+    // app.use(
+    //   express.urlencoded({
+    //     extended: true,
+    //   })
+    // );
+    // app.use(helmet());
   });
 
   server.setErrorConfig((app) => {
@@ -47,20 +62,13 @@ import "reflect-metadata";
     );
   });
 
-  const app = server.build();
+  const buildServer = server.build();
 
-  app.get("/", (req, res) => {
+  buildServer.get("/", (req, res) => {
     res.json("hello");
   });
 
   app.listen(process.env.PORT || 3000, () => {
     console.log("Server is listening on port 3000");
-  });
-
-  app.use(cors());
-  app.use((_req: express.Request, res: express.Response) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "*");
-    res.setHeader("Access-Control-Allow-Headers", "*");
   });
 })();
