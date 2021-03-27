@@ -24,6 +24,9 @@ import "reflect-metadata";
         extended: true,
       })
     );
+    app.use((_req: express.Request, res: express.Response) => {
+      res.setHeader("Access-Control-Allow-Origin", "*");
+    });
     app.use(
       cors({
         origin: "https://ddd-express-client.vercel.app/",
