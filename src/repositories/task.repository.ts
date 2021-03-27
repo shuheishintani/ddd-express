@@ -31,7 +31,7 @@ export class TaskRepository implements ITaskRepository {
   public async updateById(id: number, update: Partial<Task>): Promise<Task> {
     const task = await this.findById(id);
     if (!task) {
-      throw new CustomError("task not found", 404);
+      throw new CustomError("Task not found", 404);
     }
     return this.db.save({ ...task, ...update });
   }

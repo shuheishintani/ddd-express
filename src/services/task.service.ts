@@ -20,7 +20,7 @@ export class TaskService implements ITaskService {
     const task = this.taskFactory.buildTask(taskInput);
     const user = await this.userRepository.findById(userId);
     if (!user) {
-      throw new CustomError("user not found", 404);
+      throw new CustomError("User not found", 404);
     }
     task.user = user;
     return this.taskRepository.create(task);

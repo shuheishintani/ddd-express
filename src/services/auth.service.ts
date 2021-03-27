@@ -17,8 +17,13 @@ export class AuthService implements IAuthService {
   ) {}
 
   public async register(userInput: UserInput): Promise<AuthResponse> {
-    const user = this.userFactory.buildUser(userInput);
-    const savedUser = await this.userRepository.create(user);
+    const user = await this.userRepository.findByUsername(userInput.username);
+    if (user) {
+      throw new CustomError("User already exists", 409);
+    }
+
+    const buildUser = this.userFactory.buildUser(userInput);
+    const savedUser = await this.userRepository.create(buildUser);
     const token = jwt.sign(
       { userId: savedUser.id },
       process.env.JWT_SECRET as string,
@@ -34,10 +39,10 @@ export class AuthService implements IAuthService {
     const { username, password } = userInput;
     const user = await this.userRepository.findByUsername(username);
     if (!user) {
-      throw new CustomError("user not found", 404);
+      throw new CustomError("User not found", 404);
     }
     if (!user.passwordIsValid(password)) {
-      throw new CustomError("invalid password", 401);
+      throw new CustomError("Invalid password", 401);
     }
     const token = jwt.sign(
       { userId: user.id },

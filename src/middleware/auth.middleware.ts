@@ -20,10 +20,8 @@ export class AuthMiddleware extends BaseMiddleware {
   ) {
     const token = this.httpContext.request.headers.authorization?.split(" ")[1];
 
-    console.log(token);
-
     if (!token || token === "null") {
-      return next(new CustomError("token does not exist", 401));
+      return next(new CustomError("Token does not exist", 401));
     }
 
     const user = await this.userService.me(token).catch((err) => next(err));

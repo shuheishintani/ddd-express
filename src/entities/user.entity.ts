@@ -1,12 +1,13 @@
+import * as bcrypt from "bcryptjs";
+import { Matches, Max, Min } from "class-validator";
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
+  Entity,
   OneToMany,
+  PrimaryGeneratedColumn,
   Unique,
 } from "typeorm";
 import { Task } from "./task.entity";
-import * as bcrypt from "bcryptjs";
 
 @Entity()
 @Unique(["username"])
@@ -15,9 +16,13 @@ export class User {
   id!: number;
 
   @Column()
+  @Max(20)
+  @Matches(/^[a-zA-Z0-9]+$/)
   username!: string;
 
   @Column()
+  @Min(8)
+  @Matches(/^[a-zA-Z0-9]+$/)
   password!: string;
 
   @Column({
@@ -33,7 +38,7 @@ export class User {
   @OneToMany(() => Task, (task) => task.user)
   tasks: Task[];
 
-  passwordIsValid(unencryptedPassword: string): boolean {
-    return bcrypt.compareSync(unencryptedPassword, this.password);
+  passwordIsValid(rawPassword: string): boolean {
+    return bcrypt.compareSync(rawPassword, this.password);
   }
 }

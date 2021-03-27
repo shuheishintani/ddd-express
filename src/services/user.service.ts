@@ -23,12 +23,12 @@ export class UserService implements IUserService {
       );
       userId = payload.userId;
     } catch (err) {
-      throw new CustomError("invalid token", 401);
+      throw new CustomError("Invalid token", 401);
     }
 
     const user = await this.userRepository.findById(parseInt(userId));
     if (!user) {
-      throw new CustomError("user not found", 404);
+      throw new CustomError("User not found", 404);
     }
     return this.userFactory.buildUserViewModel(user);
   }
