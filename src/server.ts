@@ -7,13 +7,28 @@ import helmet from "helmet";
 import { Container } from "inversify";
 import { InversifyExpressServer } from "inversify-express-utils";
 import "reflect-metadata";
-import { config } from "./express";
 
 (async () => {
   dotenv.config();
   const container = new Container();
   await container.loadAsync(bindings);
-  const app = config(express());
+  const app = express();
+
+  app.use(
+    cors({
+      origin: process.env.CLIENT_ORIGIN,
+      credentials: true,
+      optionsSuccessStatus: 200,
+    })
+  );
+  app.use(express.json());
+  app.use(
+    express.urlencoded({
+      extended: true,
+    })
+  );
+  app.use(helmet());
+
   const server = new InversifyExpressServer(
     container,
     null,
@@ -22,6 +37,7 @@ import { config } from "./express";
     },
     app
   );
+
   server.setErrorConfig((app) => {
     app.use(
       (
@@ -39,6 +55,7 @@ import { config } from "./express";
       }
     );
   });
+
   const buildServer = server.build();
   buildServer.listen(process.env.PORT || 3000, () => {
     console.log("Server is listening on port 3000");
