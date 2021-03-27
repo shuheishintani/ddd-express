@@ -24,7 +24,11 @@ import "reflect-metadata";
         extended: true,
       })
     );
-    app.use(cors());
+    app.use(
+      cors({
+        origin: "https://ddd-express-client.vercel.app/",
+      })
+    );
     app.use(helmet());
   });
 
