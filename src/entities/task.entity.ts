@@ -10,7 +10,7 @@ export class Task {
   title!: string;
 
   @Column()
-  description: string;
+  description!: string;
 
   @Column({
     default: false,
