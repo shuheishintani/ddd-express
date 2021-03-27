@@ -18,24 +18,19 @@ import "reflect-metadata";
   });
 
   server.setConfig((app) => {
-    app.use(
-      cors({
-        origin: "https://ddd-express-client.vercel.app/",
-      })
-    );
-    app.use((_req: express.Request, res: express.Response) => {
-      res.setHeader("Access-Control-Allow-Origin", "*");
-      res.setHeader("Access-Control-Allow-Methods", "*");
-      res.setHeader("Access-Control-Allow-Headers", "*");
-    });
-    app.use(express.json());
-    app.use(
-      express.urlencoded({
-        extended: true,
-      })
-    );
-
-    app.use(helmet());
+    // app.use(cors());
+    // app.use((_req: express.Request, res: express.Response) => {
+    //   res.setHeader("Access-Control-Allow-Origin", "*");
+    //   res.setHeader("Access-Control-Allow-Methods", "*");
+    //   res.setHeader("Access-Control-Allow-Headers", "*");
+    // });
+    // app.use(express.json());
+    // app.use(
+    //   express.urlencoded({
+    //     extended: true,
+    //   })
+    // );
+    // app.use(helmet());
   });
 
   server.setErrorConfig((app) => {
@@ -53,6 +48,19 @@ import "reflect-metadata";
   });
 
   const app = server.build();
+
+  app.use(cors());
+  app.use(express.json());
+  app.use(
+    express.urlencoded({
+      extended: true,
+    })
+  );
+  app.use(helmet());
+
+  app.get("/", (req, res) => {
+    res.json("hello");
+  });
 
   app.listen(process.env.PORT || 3000, () => {
     console.log("Server is listening on port 3000");
