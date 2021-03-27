@@ -12,10 +12,10 @@ import { MockUserRepository } from "@/repositories/user.repository.mock";
 import { TaskRepository } from "@/repositories/task.repository";
 import { ITaskRepository } from "@/interfaces/ITaskRepository";
 import { ITaskService } from "@/interfaces/ITaskService";
-import { TaskFactory } from "./factories/task.factory";
-import { TaskService } from "./services/task.service";
-import { IAuthService } from "./interfaces/IAuthService";
-import { AuthService } from "./services/auth.service";
+import { TaskFactory } from "@/factories/task.factory";
+import { TaskService } from "@/services/task.service";
+import { IAuthService } from "@/interfaces/IAuthService";
+import { AuthService } from "@/services/auth.service";
 
 export const bindings = new AsyncContainerModule(async (bind) => {
   await require("@/controllers/auth.controller");

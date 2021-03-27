@@ -27,8 +27,11 @@ export class TaskService implements ITaskService {
   }
 
   public async list(userId: number): Promise<Task[]> {
-    const tasks = await this.taskRepository.findAll();
-    return tasks.filter((task) => task.userId === userId);
+    return this.taskRepository.find({ userId });
+  }
+
+  public async update(id: number, update: Partial<Task>): Promise<Task> {
+    return this.taskRepository.updateById(id, update);
   }
 
   public async delete(id: number): Promise<boolean> {

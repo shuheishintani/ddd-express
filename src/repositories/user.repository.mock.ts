@@ -4,7 +4,7 @@ import { IUserRepository } from "@/interfaces/IUserRepository";
 import { injectable } from "inversify";
 
 const userFactory = new UserFactory();
-const user1 = userFactory.buildUser({ username: "hoge", password: "piyo" });
+const user1 = userFactory.buildUser({ username: "foo", password: "bar" });
 user1.created_at = new Date("2016-12-24");
 user1.updated_at = new Date("2016-12-24");
 const users = [user1];

@@ -1,7 +1,9 @@
 import { TYPES } from "@/constants/types";
 import { UserInput } from "@/dto/UserInput";
 import { UserFactory } from "@/factories/user.factory";
+import { AuthResponse } from "@/fragments/AuthResponse";
 import { CustomError } from "@/fragments/CustomError";
+import { UserViewModel } from "@/fragments/UserViewModel";
 import { IAuthService } from "@/interfaces/IAuthService";
 import { IUserRepository } from "@/interfaces/IUserRepository";
 import { inject, injectable } from "inversify";
@@ -14,7 +16,7 @@ export class AuthService implements IAuthService {
     @inject(TYPES.UserFactory) private userFactory: UserFactory
   ) {}
 
-  public async register(userInput: UserInput): Promise<string> {
+  public async register(userInput: UserInput): Promise<AuthResponse> {
     const user = this.userFactory.buildUser(userInput);
     const savedUser = await this.userRepository.create(user);
     const token = jwt.sign(
@@ -24,10 +26,11 @@ export class AuthService implements IAuthService {
         expiresIn: "1h",
       }
     );
-    return token;
+    const viewModelUser = this.userFactory.buildUserViewModel(savedUser);
+    return { token, user: viewModelUser };
   }
 
-  public async login(userInput: UserInput): Promise<string | null> {
+  public async login(userInput: UserInput): Promise<AuthResponse> {
     const { username, password } = userInput;
     const user = await this.userRepository.findByUsername(username);
     if (!user) {
@@ -41,6 +44,8 @@ export class AuthService implements IAuthService {
       process.env.JWT_SECRET as string,
       { expiresIn: "1h" }
     );
-    return token;
+
+    const viewModelUser = this.userFactory.buildUserViewModel(user);
+    return { token, user: viewModelUser };
   }
 }

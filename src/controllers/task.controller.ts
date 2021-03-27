@@ -41,4 +41,12 @@ export class TaskController {
   public async delete(@requestParam("id") id: number): Promise<boolean> {
     return this.taskService.delete(id);
   }
+
+  @httpPost("/:id", TYPES.AuthMiddleware)
+  public async update(
+    @request() req: express.Request,
+    @requestParam("id") id: number
+  ): Promise<Task> {
+    return this.taskService.update(id, req.body);
+  }
 }

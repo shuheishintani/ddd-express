@@ -1,12 +1,12 @@
 import { bindings } from "@/bindings";
+import { CustomError } from "@/fragments/CustomError";
 import cors from "cors";
+import dotenv from "dotenv";
 import express from "express";
 import helmet from "helmet";
 import { Container } from "inversify";
 import { InversifyExpressServer } from "inversify-express-utils";
 import "reflect-metadata";
-import { CustomError } from "@/fragments/CustomError";
-import dotenv from "dotenv";
 
 (async () => {
   dotenv.config();

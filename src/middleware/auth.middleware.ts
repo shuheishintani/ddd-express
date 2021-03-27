@@ -18,7 +18,9 @@ export class AuthMiddleware extends BaseMiddleware {
     res: express.Response,
     next: express.NextFunction
   ) {
-    const token = this.httpContext.request.headers.authorization;
+    const token = this.httpContext.request.headers.authorization?.split(" ")[1];
+
+    console.log(token);
 
     if (!token || token === "null") {
       return next(new CustomError("token does not exist", 401));

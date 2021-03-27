@@ -15,7 +15,7 @@ export class UserFactory {
   }
 
   public buildUserViewModel(user: User): UserViewModel {
-    const { id, username, created_at, updated_at, tasks } = user;
-    return { id, username, created_at, updated_at, tasks };
+    const { id, username, created_at, updated_at } = user;
+    return { id, username, created_at, updated_at };
   }
 }

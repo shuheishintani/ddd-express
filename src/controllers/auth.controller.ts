@@ -1,4 +1,5 @@
 import { TYPES } from "@/constants/types";
+import { AuthResponse } from "@/fragments/AuthResponse";
 import { IAuthService } from "@/interfaces/IAuthService";
 import express from "express";
 import { inject } from "inversify";
@@ -11,12 +12,12 @@ export class AuthController {
   ) {}
 
   @httpPost("/register")
-  public async create(@request() req: express.Request): Promise<string> {
+  public async create(@request() req: express.Request): Promise<AuthResponse> {
     return this.authService.register(req.body);
   }
 
   @httpPost("/login")
-  public async login(@request() req: express.Request): Promise<string | null> {
+  public async login(@request() req: express.Request): Promise<AuthResponse> {
     return this.authService.login(req.body);
   }
 }
