@@ -18,6 +18,11 @@ import "reflect-metadata";
   });
 
   server.setConfig((app) => {
+    app.use(
+      cors({
+        origin: "https://ddd-express-client.vercel.app/",
+      })
+    );
     app.use(express.json());
     app.use(
       express.urlencoded({
@@ -29,11 +34,7 @@ import "reflect-metadata";
       res.setHeader("Access-Control-Allow-Methods", "*");
       res.setHeader("Access-Control-Allow-Headers", "*");
     });
-    app.use(
-      cors({
-        origin: "https://ddd-express-client.vercel.app/",
-      })
-    );
+
     app.use(helmet());
   });
 
