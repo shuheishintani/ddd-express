@@ -19,11 +19,11 @@ import "reflect-metadata";
 
   server.setConfig((app) => {
     app.use(cors());
-    // app.use((_req: express.Request, res: express.Response) => {
-    //   res.setHeader("Access-Control-Allow-Origin", "*");
-    //   res.setHeader("Access-Control-Allow-Methods", "*");
-    //   res.setHeader("Access-Control-Allow-Headers", "*");
-    // });
+    app.use((_req: express.Request, res: express.Response) => {
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Access-Control-Allow-Methods", "*");
+      res.setHeader("Access-Control-Allow-Headers", "*");
+    });
     app.use(express.json());
     app.use(
       express.urlencoded({
@@ -55,5 +55,12 @@ import "reflect-metadata";
 
   app.listen(process.env.PORT || 3000, () => {
     console.log("Server is listening on port 3000");
+  });
+
+  app.use(cors());
+  app.use((_req: express.Request, res: express.Response) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "*");
+    res.setHeader("Access-Control-Allow-Headers", "*");
   });
 })();
